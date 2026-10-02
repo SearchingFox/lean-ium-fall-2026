@@ -1,3 +1,8 @@
+/-!
+# Seminar 3
+Quantifiers, tactics
+-/
+
 /- Universal Quantifier -/
 variable (α : Type) (P Q : α → Prop)
 
@@ -37,6 +42,7 @@ example : (∃ x, P x ∨ Q x) ↔ (∃ x, P x) ∨ (∃ x, Q x) :=
 
 /- Cantor theorem -/
 
+/- 2^α ≃ α → Prop (at least classicaly) -/
 theorem cantor (f : α → (α → Prop)) :
  ¬∀ S : α → Prop, ∃ x : α, ∀ y : α, S y ↔ f x y :=
   sorry
@@ -117,16 +123,16 @@ example : (p → q) → (¬ q → ¬ p) := by
 example : p ∧ q ↔ q ∧ p := by
   sorry
 
-/- cases, constructor -/
+/- cases, constructor, left/right, exists -/
 
 example : p ∨ q → q ∨ p := by
   intro hpq
   cases hpq
   case inl hp =>
-    apply Or.inr
+    right
     assumption
   case inr =>
-    apply Or.inl
+    left
     assumption
 
 example : (p ∧ q) ∨ (p ∧ r) → p ∧ (q ∨ r) := by
@@ -135,16 +141,38 @@ example : (p ∧ q) ∨ (p ∧ r) → p ∧ (q ∨ r) := by
   case inl hpq =>
     constructor
     · exact hpq.1
-    · apply Or.inl
+    · left
       apply hpq.2
   case inr hpr =>
     have ⟨hp, hr⟩ := hpr
     constructor
     · assumption
-    · apply Or.inr
+    · right
       assumption
 
 example : p ∨ q → ¬ (¬ p ∧ ¬ q) := by
+  sorry
+
+example : (∀ x : α, P x) ∨ (∀ x : α, Q x) → ∀ x : α, P x ∨ Q x  := by
+  intro h x
+  cases h
+  case inl h =>
+    left
+    apply h
+  case inr h =>
+    right
+    apply h
+
+example : (∃ x : α, P x ∧ Q x) → (∃ x : α, P x) ∧ (∃ x : α, Q x) := by
+  intro ⟨x, hP, hQ⟩
+  constructor
+  · exists x
+  · exists x
+
+example : (∀ (x : α), P x ∧ Q x) ↔ (∀ x : α, P x) ∧ (∀ x : α, Q x) :=
+  sorry
+
+example : (∃ x, P x ∨ Q x) ↔ (∃ x, P x) ∨ (∃ x, Q x) :=
   sorry
 
 /- Tactic combinators -/

@@ -250,10 +250,10 @@ section hw
   -- Define any functions with the following types.
   -- If you can't, explain why
 
-  def ex1 : α → β → α := sorry
-  def ex2 : (α → β → γ) → β → α → γ := sorry
-  def ex3 : (α → (β → γ)) → (α → β) → α → γ := sorry
-  def ex4 : ((α → β) → γ) → (β → γ → δ) → (α → β) → α → δ := sorry
-  def ex5 : (α → β) → β → α := sorry
+  def ex1 : α → β → α := fun x _ ↦ x
+  def ex2 : (α → β → γ) → β → α → γ := fun f b a ↦ f a b
+  def ex3 : (α → (β → γ)) → (α → β) → α → γ := fun f1 f2 a ↦ f1 a (f2 a)
+  def ex4 : ((α → β) → γ) → (β → γ → δ) → (α → β) → α → δ := fun f1 f2 f3 a ↦ f2 (f3 a) (f1 f3)
+  def ex5 : (α → β) → β → α := sorry  -- impossible
 
 end hw
